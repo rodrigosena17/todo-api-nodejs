@@ -1,54 +1,53 @@
-const pool = require('../database/connection')
-
-exports.createTask = async (req, res) => {
-  const { title, description } = req.body
-
-  const result = await pool.query(
-    'INSERT INTO tasks (title, description) VALUES ($1,$2) RETURNING *',
-    [title, description]
-  )
-
-  res.json(result.rows[0])
-}
+const Task = require('../models/task')
 
 exports.getTasks = async (req, res) => {
-  const result = await pool.query('SELECT * FROM tasks')
-  res.json(result.rows)
+  try {
+    const tasks = await Task.getAll()
+    res.json(tasks)
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching tasks' })
+  }
 }
 
 exports.getTaskById = async (req, res) => {
-  const { id } = req.params
+  try {
+    const task = await Task.getById(req.params.id)
+    res.json(task)
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching task' })
+  }
+}
 
-  const result = await pool.query(
-    'SELECT * FROM tasks WHERE id=$1',
-    [id]
-  )
-
-  res.json(result.rows[0])
+exports.createTask = async (req, res) => {
+  try {
+    const { title, description } = req.body
+    const task = await Task.create(title, description)
+    res.status(201).json(task)
+  } catch (error) {
+    res.status(500).json({ error: 'Error creating task' })
+  }
 }
 
 exports.updateTask = async (req, res) => {
-  const { id } = req.params
-  const { title, description, status } = req.body
-
-  const result = await pool.query(
-    `UPDATE tasks
-     SET title=$1, description=$2, status=$3
-     WHERE id=$4
-     RETURNING *`,
-    [title, description, status, id]
-  )
-
-  res.json(result.rows[0])
+  try {
+    const { title, description, status } = req.body
+    const task = await Task.update(
+      req.params.id,
+      title,
+      description,
+      status
+    )
+    res.json(task)
+  } catch (error) {
+    res.status(500).json({ error: 'Error updating task' })
+  }
 }
 
 exports.deleteTask = async (req, res) => {
-  const { id } = req.params
-
-  await pool.query(
-    'DELETE FROM tasks WHERE id=$1',
-    [id]
-  )
-
-  res.json({ message: "Task deletada" })
+  try {
+    await Task.delete(req.params.id)
+    res.json({ message: 'Task deleted' })
+  } catch (error) {
+    res.status(500).json({ error: 'Error deleting task' })
+  }
 }
