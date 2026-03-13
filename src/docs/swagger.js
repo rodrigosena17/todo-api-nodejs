@@ -4,19 +4,26 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Todo_API',
+      title: 'Todo API',
       version: '1.0.0',
-      description: 'API para gerenciamento de tarefas com autenticação JWT'
+      description: 'API REST para gerenciamento de tarefas com autenticação JWT'
     },
     servers: [
       {
         url: 'http://localhost:3000'
       }
-    ]
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      }
+    }
   },
-  apis: ['./src/routes/*.js']
+  apis: [__dirname + '/../routes/*.js']
 }
 
-const swaggerSpec = swaggerJsdoc(options)
-
-module.exports = swaggerSpec
+module.exports = swaggerJsdoc(options)
