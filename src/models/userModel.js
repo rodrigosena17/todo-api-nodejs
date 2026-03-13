@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const pool = require('../database/connection');
 
 exports.createUser = async (name, email, password) => {
   const result = await pool.query(

@@ -1,9 +1,11 @@
 const Task = require('../models/task')
 
 exports.getTasks = async (req, res) => {
-  try {
+  try { 
+    
     const tasks = await Task.getAll()
-    res.json(tasks)
+    
+    return res.json(tasks)
   } catch (error) {
     res.status(500).json({ error: 'Error fetching tasks' })
   }
