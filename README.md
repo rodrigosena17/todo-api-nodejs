@@ -110,7 +110,7 @@ OR
 
 Execute:
 
-psql -U postgres -d todo_db -f database/schema.sql
+```psql -U postgres -d todo_db -f database/schema.sql```
 
 
 ### 5. Run the server
