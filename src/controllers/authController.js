@@ -16,7 +16,15 @@ exports.register = async (req, res) => {
 
     res.status(201).json(user);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.code === '23505') {
+    return res.status(409).json({
+      message: 'Email já cadastrado'
+    })
+  }
+    res.status(500).json({ message: 'Erro interno do servidor' });
+
+    
+    //res.status(500).json({ error: err.message });
   }
 };
 
