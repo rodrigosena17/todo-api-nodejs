@@ -18,6 +18,8 @@ module.exports = router
  *   get:
  *     summary: Retorna todas as tarefas
  *     tags: [Tasks]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de tarefas

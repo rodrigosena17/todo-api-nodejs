@@ -25,6 +25,9 @@ module.exports = router;
  *               email:
  *                 type: string
  *                 example: user@email.com
+ *               name:
+ *                 type: string
+ *                 example: João da Silva
  *               password:
  *                 type: string
  *                 example: 123456
