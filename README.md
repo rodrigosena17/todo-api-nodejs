@@ -20,12 +20,29 @@ todo-api
 ├── src
 │ ├── controllers
 │ │ taskController.js
+│ │ authController.js
 │ │
 │ ├── routes
 │ │ taskRoutes.js
+│ │ authRoutes.js
 │ │
 │ ├── database
 │ │ connection.js
+│ │ schema.sql
+│ │
+│ ├── docs
+│ │ swagger.js
+│ │
+│ ├── middlewares
+│ │ authMiddleware.js
+│ │
+│ ├── models
+│ │ task.js
+│ │ userModel.js
+│ │
+│ ├── routes
+│ │ authRoutes.js
+│ │ taskRoutes.js
 │ │
 │ └── app.js
 │
@@ -79,7 +96,21 @@ description TEXT,
 status VARCHAR(50) DEFAULT 'pending',
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
+OR
+
+## Database Setup
+
+Execute:
+
+psql -U postgres -d todo_db -f database/schema.sql
 
 
 ### 5. Run the server
