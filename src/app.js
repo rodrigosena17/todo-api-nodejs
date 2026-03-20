@@ -12,8 +12,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.use('/auth', authRoutes)
-app.use('/tasks', taskRoutes)
+app.use('/api', authRoutes)
+app.use('/api', taskRoutes)
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
